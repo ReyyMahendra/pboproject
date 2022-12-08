@@ -1,0 +1,75 @@
+﻿@page
+@model OrderDetailsModel
+@{
+    var id = ViewData["Id"];
+    var idpaket = ViewData["IdPaket"];
+    var namabooking = ViewData["NamaBooking"];
+    string day = (DateTime.Parse(ViewData["TanggalBooking"].ToString()).Day).ToString();
+    if(int.Parse(day) < 10) day = "0"+day;
+    var tanggalbooking = DateTime.Parse(ViewData["TanggalBooking"].ToString()).Year+"-"+DateTime.Parse(ViewData["TanggalBooking"].ToString()).Month+"-"+day;
+    var status = ViewData["Status"].ToString().ToUpper();
+    if(status != "PENDING" && status != "ACCEPTED"){
+        status = ViewData["Status"].ToString().ToUpper()+ " | " + ViewData["Metode"].ToString() + "(" + ViewData["StatusTransaksi"].ToString() + ")";
+    }
+}
+ <!--account setting  -->
+<div class="row">
+    <!-- account header -->
+    <div class="col-4" style="text-align: right;">
+        <h1 class="mx-3" style="font-weight: 700;">Pembayaran</h1>
+        <p class="mx-3" style="font-weight: 600;">Pilih jenis pembayaran dan transfer</p>
+        @if(Model.Message!=""){
+            <div class="alert alert-success" role="alert">
+                @Model.Message
+            </div>
+        }
+    </div>
+    <!-- account info -->
+    <div class="col-8">
+        <div class="account-info">
+            <div class="account-info-title">
+                <h4 style="font-weight: 700;">Pemesanan ID : @ViewData["Id"]</h4>
+            </div>
+            <div class="account-info-body">
+                <form method="post">
+                    <div class="row">
+                        <div class="col-8">
+                            <input type="hidden" name="id" value="@id">
+                            <div class="form-group mb-3">
+                                <label for="paket" class="form-label">ID Paket</label>
+                                <input type="text" class="form-control" style="background-color: grey; font-weight:600;" id="paket" name="paket" placeholder="Enter your paket" value="@idpaket" disabled>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="nama" class="form-label">Nama Booking</label>
+                                <input type="text" class="form-control" style="font-weight:600;" id="nama" name="nama" placeholder="Enter your nama" value="@namabooking">
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="tanggal" class="form-label">Tanggal Booking</label>
+                                <input type="date" class="form-control" style="font-weight:600;" id="tanggal" name="tanggal" placeholder="Enter your tanggal" value="@tanggalbooking">
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="status" class="form-label">Status</label>
+                                <input type="text" class="form-control" style="background-color: grey; font-weight:600;" id="status" name="status" placeholder="Enter your status" value="@status" disabled>
+                            </div>
+                            @if (status == "ACCEPTED") {
+                                @* goto payment button *@
+                                <div class="form-group my-4 text-start">
+                                    <a href="/Payments?id=@id" class="btn btn-success">Go to Payment</a>
+                                </div>
+                                }
+                            <div class="form-group my-4 text-end">
+                                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">Delete Order</button>
+                                <button type="submit" style="width: 80px;" class="btn btn-primary">Update</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    document.getElementById("container").style.marginTop = "5vh";
+    document.getElementById("tubuh").classList.replace("index", "account");
+    document.getElementById("brand").innerText = "Photoworks | Detail Order";
+</script>

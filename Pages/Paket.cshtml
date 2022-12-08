@@ -1,0 +1,37 @@
+﻿@page
+@model PaketModel
+@{
+    var ListData = ViewData["Pakets"] as List<string[]>;
+}
+<div class="row">
+    @if(ListData!=null){
+        @for (int i = 0; i < ListData.Count; i++)
+        {
+            <div class="card text-dark mx-3" style="width: 20rem;">
+                @* little number and price on right *@
+                <div class="mt-1">@ListData[i][0]</div>
+                @if (ListData[i][1] == "Studio")
+                {
+                    <img src="images/studio.png" class="card-img-top" alt="...">
+                }else{
+                    <img src="images/fotografer.png" class="card-img-top" alt="...">
+                }
+                <div class="card-body d-flex flex-column justify-content-between">
+                    <h5 class="card-title">@ListData[i][1] (@ListData[i][2]/@ListData[i][3])</h5>
+                    <p class="card-text text-success">Rp. @ListData[i][5]</p>
+                    <p>@ListData[i][4]</p>
+                    <a href="/Checkout?paket=@ListData[i][0]" class="btn btn-success">Pilih Paket</a>
+                </div>
+            </div>
+        }
+    }else{
+        <h3 class="text-center text-danger">Tidak ada Paket</h3>
+    }
+</div>
+<script>
+    document.getElementById("masker").classList.remove("mask");
+    document.getElementById("tubuh").classList.replace("index", "paket");
+    document.getElementById("container").style.removeProperty("margin-top");
+    document.getElementById("container").style.marginTop = "5vh";
+    document.getElementById("brand").innerText = "Photoworks | Daftar Paket";
+</script>

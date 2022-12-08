@@ -1,0 +1,51 @@
+﻿@page
+@model photoworks.Pages.HistoryModel
+@{
+    var Orders = ViewData["Orders"] as List<string[]>;
+}
+<div class="row">
+    <div class="col-3" style="text-align: right;">
+        <h1 class="mx-3" style="font-weight: 700;">Order's History</h1>
+        <p class="mx-3" style="font-weight: 600;">See your previous orders</p>
+    </div>
+    <div class="col-9">
+        @if(Orders!=null){
+            <table class="table table-striped" style="color:white;">
+                <thead>
+                    <tr>
+                        <th scope="col">ID Order</th>
+                        <th scope="col">ID Paket</th>
+                        <th scope="col">Atas Nama</th>
+                        <th scope="col">Tanggal Pemesanan</th>
+                        <th scope="col">Dp</th>
+                        <th scope="col">Total</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Dibuat Pada</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var order in Orders)
+                    {
+                        <tr>
+                            <td style="color:white;">@order[0]</td>
+                            <td style="color:white;">@order[1]</td>
+                            <td style="color:white;">@order[2]</td>
+                            <td style="color:white;">@DateTime.Parse(order[3]).Day / @DateTime.Parse(order[3]).Month / @DateTime.Parse(order[3]).Year</td>
+                            <td style="color:white;">Rp. @order[4]</td>
+                            <td style="color:white;">Rp. @(int.Parse(order[4])*4)</td>
+                            <td style="color:white;">@order[5]</td>
+                            <td style="color:white;">@order[6]</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else{
+            <p class="mx-3" style="font-weight: 600;">You have no orders</p>
+        }
+    </div>
+</div>
+<script>
+    document.getElementById("tubuh").classList.replace("index", "account");
+</script>
+

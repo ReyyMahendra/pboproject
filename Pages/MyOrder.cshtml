@@ -1,0 +1,113 @@
+﻿@page
+@model photoworks.Pages.MyOrderModel
+@{
+    var Orders = ViewData["Orders"] as List<string[]>;
+    var Photographers = ViewData["Photographers"] as List<string[]>;
+}
+<div class="column">
+    <div class="row" style="text-align: left; margin-bottom:5vh;">
+        @if(ViewData["Session"].ToString()=="ADMIN"){
+            <div class="col-6">
+                <h1 class="mx-3" style="font-weight: 700;">All Orders</h1>
+                <p class="mx-3" style="font-weight: 600;">Manage all orders here</p>
+                @* list available photographers *@
+            </div>
+            <div class="col-6">
+                <div class="mx-3">
+                    <h3 style="font-weight: 600;">Photographers</h3>
+                    @foreach (var photographer in Photographers)
+                    {
+                        <p>@photographer[0] (@photographer[1])</p>
+                    }
+                </div>
+            </div>
+        }else{
+            <h1 class="mx-3" style="font-weight: 700;">Your Orders</h1>
+            <p class="mx-3" style="font-weight: 600;">Manage your orders here</p>
+        }
+    </div>
+    <div class="col-12">
+        @if(Orders!=null){
+            <table class="table table-striped" style="color:white;">
+                <thead>
+                    <tr class="text-center">
+                        <th scope="col">ID Order</th>
+                        <th scope="col">ID Paket</th>
+                        <th scope="col">Atas Nama</th>
+                        <th scope="col">Tanggal Pemesanan</th>
+                        <th scope="col">Dp</th>
+                        <th scope="col">Total</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Dibuat Pada</th>
+                        @if(ViewData["Session"].ToString()=="ADMIN"){
+                            <th scope="col">Action</th>
+                        }else{
+                            <th scope="col">Details</th>
+                        }
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var order in Orders)
+                    {
+                        <tr class="text-center">
+                            <td style="color:white;">@order[0]</td>
+                            <td style="color:white;">@order[1]</td>
+                            <td style="color:white;">@order[2]</td>
+                            <td style="color:white;">@DateTime.Parse(order[3]).Day / @DateTime.Parse(order[3]).Month / @DateTime.Parse(order[3]).Year</td>
+                            <td style="color:white;">Rp. @order[4]</td>
+                            <td style="color:white;">Rp. @(int.Parse(order[4])*4)</td>
+                            <td style="color:white;">@order[5]</td>
+                            <td style="color:white;">@order[6]</td>
+                            @if(ViewData["Session"].ToString()=="ADMIN" && order[5]=="pending"){
+                                @* list photgraphers *@
+                                <td style="color:white;" class="row">
+                                    <div class="col">
+                                        <div class="dropdown">
+                                            <button class="btn btn-outline-light dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                                Accept
+                                            </button>
+                                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                @foreach (var photographer in Photographers)
+                                                {
+                                                    @if(order[3]!=photographer[2].ToString()){
+                                                        <li><a class="dropdown-item" href="/AcceptOrder?id=@order[0]&photographer=@photographer[3]">@photographer[0] (@photographer[1])</a></li>
+                                                    }
+                                                }
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        @* tolak *@
+                                        <a href="/RejectOrder?id=@order[0]" class="btn btn-outline-danger">Reject</a>
+                                    </div>
+                                </td>
+                            }else{
+                                @if(ViewData["Session"].ToString()=="ADMIN"){
+                                    @if(order[5]=="accepted"){
+                                        <td style="color:white;">Accepted</td>
+                                    }else if (order[5]=="rejected"){
+                                        <td style="color:white;">Rejected</td>
+                                    }else if (order[5]=="paid"){
+                                        @* verify *@
+                                        <td style="color:white;"><a href="/VerifyOrder?id=@order[0]">Verify</a></td>
+                                    }
+                                }else{
+                                    <td style="color:white;"><a href="/OrderDetails?id=@order[0]">Details</a></td>
+                                }
+                            }
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else{
+            <p class="mx-3" style="font-weight: 600;">You have no orders</p>
+        }
+    </div>
+</div>
+<script>
+    document.getElementById("container").style.removeProperty("margin-top");
+    document.getElementById("container").style.marginTop = "5vh";
+    document.getElementById("tubuh").classList.replace("index", "account");
+    document.getElementById("brand").innerText = "Photoworks | Orders";
+</script>

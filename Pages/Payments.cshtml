@@ -1,0 +1,74 @@
+﻿@page
+@model photoworks.Pages.PaymentsModel
+@{
+    var nama = ViewData["NamaBooking"];
+    var id = ViewData["Id"];
+    var dp = ViewData["Dp"];
+    var paket = "Packet No : "+ViewData["IdPaket"] + " | For : " + DateTime.Parse(ViewData["TanggalBooking"].ToString()).Day+ "/" +DateTime.Parse(ViewData["TanggalBooking"].ToString()).Month +"/" + DateTime.Parse(ViewData["TanggalBooking"].ToString()).Year + " | CreatedAt : " + DateTime.Parse(ViewData["CreatedAt"].ToString()).Day +"/" + DateTime.Parse(ViewData["CreatedAt"].ToString()).Month +"/" + DateTime.Parse(ViewData["CreatedAt"].ToString()).Year;
+    var total = int.Parse(dp.ToString())*4;
+}
+ <!--account setting  -->
+<div class="row">
+    <!-- account header -->
+    <div class="col-4" style="text-align: right;">
+        <h1 class="mx-3" style="font-weight: 700;">Pembayaran</h1>
+        <p class="mx-3" style="font-weight: 600;">Pilih jenis pembayaran dan transfer</p>
+    </div>
+    <!-- account info -->
+    <div class="col-8">
+        <div class="account-info">
+            <div class="account-info-title">
+                <h4 style="font-weight: 700;">Pemesanan ID : @ViewData["Id"]</h4>
+            </div>
+            <div class="account-info-body">
+                <form method="post">
+                    <div class="row">
+                        <div class="col-8">
+                            <input type="hidden" name="id" value="@id">
+                            <!-- name -->
+                            <div class="form-group mb-3">
+                                <label for="name" class="form-label">Atas Nama</label>
+                                <input type="text" class="form-control" style="background-color: grey; font-weight:600;" id="name" name="name" placeholder="Enter your name" value="@nama" disabled>
+                            </div>
+                            @* paket *@
+                            <div class="form-group mb-3">
+                                <label for="paket" class="form-label">Paket</label>
+                                <input type="text" class="form-control" style="background-color: grey; font-weight:600;" id="paket" name="paket" placeholder="Enter your paket" value="@paket" disabled>
+                            </div>
+                            @* dp *@
+                            <div class="form-group mb-3">
+                                <label for="dp" class="form-label">DP</label>
+                                <input type="text" class="form-control" style="background-color: grey; font-weight:600;" id="dp" name="dp" placeholder="Enter your dp" value="@dp" disabled>
+                            </div>
+                            @* total *@
+                            <div class="form-group mb-3">
+                                <label for="total" class="form-label">Total</label>
+                                <input type="text" class="form-control" style="background-color: grey; font-weight:600;" id="total" name="total" placeholder="Enter your total" value="@total" disabled>
+                            </div>
+                            @* payment *@
+                            <div class="form-group mb-3">
+                                <label for="payment" class="form-label">Pembayaran</label>
+                                <select class="form-select" id="payment" name="payment" aria-label="Default select example">
+                                    <option selected>Pilih Pembayaran</option>
+                                    <option value="bank">Transfer Bank (BNI) 1234567890</option>
+                                    <option value="ovo">OVO 081234567890</option>
+                                    <option value="dama">Dana 081234567890</option>
+                                    <option value="gopay">Gopay 081234567890</option>
+                                </select>
+                            </div>
+                            <div class="form-group my-4 text-end d-flex flex-row justify-content-between">
+                                <a href="/OrderDetails?id=@id" type="button" class="btn btn-primary">Kembali</a>
+                                <button type="submit" style="width: 80px;" class="btn btn-success">Bayar</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    document.getElementById("container").style.marginTop = "5vh";
+    document.getElementById("tubuh").classList.replace("index", "account");
+    document.getElementById("brand").innerText = "Photoworks | Payments";
+</script>

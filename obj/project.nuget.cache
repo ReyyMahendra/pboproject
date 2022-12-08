@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "dgSpecHash": "4Svu+AJc/v+Pg8ZUpKUBX1INuA8t/NOirweUiq+eSJjF321T3FIcZgSZ9lAymELa4EXNwEvcR+L0eyhZBL1dxQ==",
+  "success": true,
+  "projectFilePath": "A:\\photoworks\\photoworks.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\lenovo\\.nuget\\packages\\microsoft.extensions.logging.abstractions\\6.0.0\\microsoft.extensions.logging.abstractions.6.0.0.nupkg.sha512",
+    "C:\\Users\\lenovo\\.nuget\\packages\\npgsql\\7.0.0\\npgsql.7.0.0.nupkg.sha512",
+    "C:\\Users\\lenovo\\.nuget\\packages\\system.runtime.compilerservices.unsafe\\6.0.0\\system.runtime.compilerservices.unsafe.6.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}
